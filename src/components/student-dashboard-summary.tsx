@@ -45,6 +45,7 @@ import {
 } from 'chart.js'
 import { Line } from 'react-chartjs-2'
 import Link from "next/link"
+import useMetricsStore from "@/lib/store"
 
 // Register Chart.js components
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
@@ -94,6 +95,9 @@ export default function StudentDashboardSummary() {
   }
 
   const chartLabels = ['5 Mins', '10 Mins', '15 Mins', '20 Mins', '25 Mins']
+
+  const attentiveCount = useMetricsStore((state: any)=> state.attentiveCount);
+const totalStudents = useMetricsStore((state: any) => state.totalStudents);
 
   const chartData = {
     labels: chartLabels,
@@ -149,9 +153,9 @@ export default function StudentDashboardSummary() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-lg font-bold text-gray-600 mb-1">Total Students</p>
-                  <p className="text-4xl font-bold text-orange-500 mb-2">24</p>
+                  <p className="text-4xl font-bold text-orange-500 mb-2">6</p>
                   <p className="text-sm text-gray-600">Active in class</p>
-                  <p className="text-2xl font-bold text-orange-400">18</p>
+                  <p className="text-2xl font-bold text-orange-400">5</p>
                 </div>
                 
               </div>
@@ -175,7 +179,7 @@ export default function StudentDashboardSummary() {
       <div>
         <p className="text-lg font-bold  text-gray-600 mb-1">Average Attentiveness</p>
         <p className="text-4xl font-bold text-purple-500 mb-2">78%</p>
-        <p className="text-sm text-gray-600">Class Attentiveness</p>
+        <p className="text-sm text-gray-600">Active in class</p>
         <p className="text-2xl font-bold text-purple-400">63%</p>
       </div>
     </div>
@@ -201,9 +205,9 @@ export default function StudentDashboardSummary() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-lg font-bold text-gray-600 mb-1">High Performers</p>
-                  <p className="text-4xl font-bold text-green-500 mb-2">24</p>
+                  <p className="text-4xl font-bold text-green-500 mb-2">2</p>
                   <p className="text-sm text-gray-600">Active in class</p>
-                  <p className="text-2xl font-bold text-green-400">18</p>
+                  <p className="text-2xl font-bold text-green-400">5</p>
                 </div>
                 
               </div>
@@ -226,9 +230,9 @@ export default function StudentDashboardSummary() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-lg font-bold text-gray-600 mb-1">Need Attention</p>
-                  <p className="text-4xl font-bold text-red-500 mb-2">3</p>
+                  <p className="text-4xl font-bold text-red-500 mb-2">1</p>
                   <p className="text-sm text-gray-600">Active in class</p>
-                  <p className="text-2xl font-bold text-red-400">18</p>
+                  <p className="text-2xl font-bold text-red-400">5</p>
                 </div>
                 
               </div>

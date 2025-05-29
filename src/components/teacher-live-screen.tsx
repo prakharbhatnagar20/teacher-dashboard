@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Eye, Clock, ChevronLeft } from "lucide-react";
 import { io } from "socket.io-client";
 import { Button } from "./ui/button";
+import useMetricsStore from "@/lib/store";
 
 interface MetricCardProps {
   title: string;
@@ -37,16 +38,21 @@ const ClassroomDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'solutions' | 'notes'>('solutions');
 
   const [metrics, setMetrics] = useState({
-    attentiveCount: 0,
-    inattentiveCount: 0,
-    cameraOffCount: 0,    notDetectedCount: 0,
+    attentiveCount: 4,
+    inattentiveCount: 1,
+    cameraOffCount: 1,    notDetectedCount: 0,
   });
+
+  const [totalStudents, setTotalStudents] = useState(6);
+  const [averageAttentiveness, setAverageAttentiveness] = useState(0);
 
   const mockSubmissions = Array(9).fill(null).map((_, index) => ({
     id: index + 1,
     studentName: "Anirush Sharma",
-    imageUrl: "/icons/chat.png",
+    imageUrl: "/images/notes.jpg",
   }));
+
+  const setMetricsData = useMetricsStore((state: any) => state.setMetricsData);
 
     useEffect(() => {
     socket.emit("join-session", { teacherId: "teacher100" });
@@ -55,12 +61,12 @@ const ClassroomDashboard: React.FC = () => {
       const latest = data.graphMetrics?.[data.graphMetrics.length - 1];
       console.log("Latest metrics received:", latest);
       if (latest) {
-        setMetrics({
-          attentiveCount: latest.attentiveCount,
-          inattentiveCount: latest.inattentiveCount,
-          cameraOffCount: latest.cameraOffCount,
-          notDetectedCount: latest.notDetectedCount,
-        });
+        // setMetrics({
+        //   attentiveCount: latest.attentiveCount,
+        //   inattentiveCount: latest.inattentiveCount,
+        //   cameraOffCount: latest.cameraOffCount,
+        //   notDetectedCount: latest.notDetectedCount,
+        // });
       }
     });
 
@@ -82,6 +88,47 @@ const ClassroomDashboard: React.FC = () => {
   useEffect(() => {
     
   }, []);
+
+  useEffect(() => {
+  let intervalId;
+
+  const fetchMetrics = async () => {
+    try {
+      const response = await fetch("https://testsetup-er18.onrender.com/api/attendance"); // Replace with your actual API URL
+      const data = await response.json();
+
+      console.log("Fetched metrics:", data);
+
+      if (data && typeof data === "object") {
+        setMetrics({
+          attentiveCount: data.attentive || 0,
+          inattentiveCount: data.nonAttentive || 0,
+          cameraOffCount: data.camOff || 0,
+          notDetectedCount: data.notDetected || 0,
+        });
+
+        // setTotalStudents(data.totalStudents || 0);
+        setAverageAttentiveness(data.averageAttentiveness || 0);
+
+        setMetricsData(data);
+
+
+
+      }
+    } catch (error) {
+      console.error("Error fetching metrics:", error);
+    }
+  };
+
+  // Initial fetch
+  fetchMetrics();
+
+  // Poll every 10 seconds
+  intervalId = setInterval(fetchMetrics, 10000);
+
+  // Cleanup on component unmount
+  return () => clearInterval(intervalId);
+}, []);
 
    const formatTime = (secs:any) => {
     const mins = Math.floor(secs / 60)
@@ -153,7 +200,7 @@ const ClassroomDashboard: React.FC = () => {
         <div className="bg-white rounded-lg py-10 px-10 shadow-sm flex flex-col relative ">
           {/* Total Students (Top-right badge) */}
           <div className="absolute top-4 right-4 bg-blue-100 text-blue-800 text-sm font-semibold px-4 py-1 rounded-full shadow">
-            Total Students: 18
+            Total Students: {totalStudents}
           </div>
 
           <h2 className="text-3xl font-bold mb-2">Real-time Class Attention</h2>
