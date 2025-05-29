@@ -5,6 +5,9 @@ import {
   ChevronLeft,
   TrendingUp,
   TrendingDown,
+  BookOpen,
+  Users,
+  FileText,
 } from "lucide-react"
 import {
   Button
@@ -41,12 +44,13 @@ import {
   ChartOptions
 } from 'chart.js'
 import { Line } from 'react-chartjs-2'
+import Link from "next/link"
 
 // Register Chart.js components
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
 
 const studentData = [
-  { name: "Manish", score: 98, trend: "up", status: "Attentive", solutions: "4/9", notes: "5/8" },
+  { name: "Saksham", score: 98, trend: "up", status: "Attentive", solutions: "4/9", notes: "5/8" },
   { name: "Ravi", score: 21, trend: "down", status: "Distractive", solutions: "4/9", notes: "5/8" },
   { name: "Kishan", score: 28, trend: "down", status: "Distractive", solutions: "4/9", notes: "5/8" },
   { name: "Ashish", score: 98, trend: "up", status: "Attentive", solutions: "4/9", notes: "5/8" },
@@ -57,10 +61,10 @@ const studentData = [
 
 export default function StudentDashboardSummary() {
   const analyticsData = [
-    { label: "Attentive Students", percentage: 63, count: 8, color: "bg-green-500", textColor: "text-green-600" },
-    { label: "Non-Attentive Students", percentage: 38, count: 4, color: "bg-pink-500", textColor: "text-pink-600" },
-    { label: "Camera Off Students", percentage: 22, count: 2, color: "bg-orange-500", textColor: "text-orange-600" },
-    { label: "Not in Camera Students", percentage: 14, count: 1, color: "bg-gray-600", textColor: "text-gray-600" },
+    { label: "Attentive Students", percentage: 63, count: 8, color: "bg-green-500", textColor: "text-green-600", imageSrc: "/images/eye.svg" },
+    { label: "Non-Attentive Students", percentage: 38, count: 4, color: "bg-pink-500", textColor: "text-pink-600", imageSrc: "/images/notAttentive.svg" },
+    { label: "Camera Off Students", percentage: 22, count: 2, color: "bg-orange-500", textColor: "text-orange-600", imageSrc: "/images/videoOn.svg" },
+    { label: "Not in Frame", percentage: 14, count: 1, color: "bg-gray-600", textColor: "text-gray-600", imageSrc: "/images/notInframe.svg" },
   ]
 
   const chartOptions: ChartOptions<'line'> = {
@@ -122,12 +126,15 @@ export default function StudentDashboardSummary() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4">
+    <div className="min-h-screen bg-gray-50">
       <div className="w-full mx-auto space-y-6">
         {/* Header */}
         <div className="bg-white w-full flex items-center gap-4 mb-8 py-4 px-10">
           <Button variant="ghost" size="sm" className="p-0">
-            <ChevronLeft className="h-5 w-5" />
+            <Link href="/livetracking">
+
+            <ChevronLeft className="h-5 w-5 cursor-pointer" />
+            </Link>
             <span className="ml-1 text-lg">Summary</span>
           </Button>
         </div>
@@ -251,9 +258,11 @@ export default function StudentDashboardSummary() {
               {analyticsData.map((item, index) => (
                 <div key={index} className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="w-4 h-4 rounded-full" style={{ backgroundColor: item.color.replace('bg-', '#') }}></div>
-                      <span className="text-sm font-medium text-gray-700">{item.label}</span>
+                    <div className="flex items-center justify-center gap-3">
+                      <div className="w-6 h-6 rounded-full" style={{ backgroundColor: item.color.replace('bg-', '#') }}>
+                        <img src={item.imageSrc} alt={item.label} className="w-6 h-6 mr-2" />
+                      </div>
+                      <span className="text-lg font-medium text-gray-700">{item.label}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="text-lg font-bold">{item.percentage}%</span>
@@ -286,7 +295,7 @@ export default function StudentDashboardSummary() {
               <CardTitle className="text-2xl font-bold">Student Attentiveness Overview</CardTitle>
               <p className="text-sm text-gray-500">Analytics and Performance Metrics</p>
             </div>
-            <div className="h-64">
+            <div className="h-74">
               <Line options={chartOptions} data={chartData} />
             </div>
             <div className="mt-4 flex flex-wrap gap-4 justify-center">
@@ -305,56 +314,105 @@ export default function StudentDashboardSummary() {
 
         {/* Student Table */}
         <div className="px-10 mb-8">
-          <Card className="bg-white border-0 shadow-md">
-            <CardHeader>
-              <CardTitle className="text-xl font-bold">Student Attentiveness Overview</CardTitle>
-              <p className="text-sm text-gray-500">Analytics and Performance Metrics</p>
-            </CardHeader>
-            <CardContent>
+          <Card className="bg-white border-0 shadow-lg rounded-xl overflow-hidden">
+          <CardHeader className="bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-gray-100">
+            <CardTitle className="text-2xl font-bold text-gray-800 flex items-center gap-2">
+              
+              Student Attentiveness Overview
+            </CardTitle>
+            <p className="text-sm text-gray-600 mt-1">Analytics and Performance Metrics</p>
+          </CardHeader>
+          <CardContent className="p-0">
+            <div className="overflow-x-auto">
               <Table>
                 <TableHeader>
-                  <TableRow>
-                    <TableHead>Student</TableHead>
-                    <TableHead>Score</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Solutions</TableHead>
-                    <TableHead>Notes</TableHead>
+                  <TableRow className="bg-gray-50 hover:bg-gray-50">
+                    <TableHead className="font-semibold text-gray-700 py-4 px-6">Student</TableHead>
+                    <TableHead className="font-semibold text-gray-700 py-4 px-6">Score</TableHead>
+                    <TableHead className="font-semibold text-gray-700 py-4 px-6">Status</TableHead>
+                    <TableHead className="font-semibold text-gray-700 py-4 px-6">Solutions</TableHead>
+                    <TableHead className="font-semibold text-gray-700 py-4 px-6">Notes</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {studentData.map((student, index) => (
-                    <TableRow key={index}>
-                      <TableCell className="font-medium">{student.name}</TableCell>
-                      <TableCell>
-                        <div className="flex items-center gap-2">
-                          <span className="font-semibold">{student.score}%</span>
-                          {student.trend === "up" ? (
-                            <TrendingUp className="h-4 w-4 text-green-600" />
-                          ) : (
-                            <TrendingDown className="h-4 w-4 text-red-600" />
-                          )}
+                    <TableRow
+                      key={index}
+                      className="hover:bg-blue-50/50 transition-colors duration-200 border-b border-gray-100"
+                    >
+                      <TableCell className="font-medium py-4 px-6">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-sm font-semibold">
+                            {student.name
+                              .split(" ")
+                              .map((n) => n[0])
+                              .join("")}
+                          </div>
+                          <span className="text-gray-900">{student.name}</span>
                         </div>
                       </TableCell>
-                      <TableCell>
+                      <TableCell className="py-4 px-6">
+                        <div className="flex items-center gap-3">
+                          <div className="flex items-center gap-2">
+                            <span className="font-bold text-lg text-gray-800">{student.score}%</span>
+                            {student.trend === "up" ? (
+                              <div className="p-1 bg-green-100 rounded-full">
+                                <TrendingUp className="h-3 w-3 text-green-600" />
+                              </div>
+                            ) : (
+                              <div className="p-1 bg-red-100 rounded-full">
+                                <TrendingDown className="h-3 w-3 text-red-600" />
+                              </div>
+                            )}
+                          </div>
+                          <div className="w-16 bg-gray-200 rounded-full h-2">
+                            <div
+                              className={`h-2 rounded-full ${student.score >= 80 ? "bg-green-500" : student.score >= 60 ? "bg-yellow-500" : "bg-red-500"}`}
+                              style={{ width: `${student.score}%` }}
+                            ></div>
+                          </div>
+                        </div>
+                      </TableCell>
+                      <TableCell className="py-4 px-6">
                         <Badge
                           variant={student.status === "Attentive" ? "default" : "destructive"}
-                          className={
+                          className={`${
                             student.status === "Attentive"
-                              ? "bg-green-500 hover:bg-green-600"
-                              : "bg-red-500 hover:bg-red-600"
-                          }
+                              ? "bg-green-500 hover:bg-green-600 text-white border-0"
+                              : "bg-red-500 hover:bg-red-600 text-white border-0"
+                          } px-3 py-1 rounded-full font-medium shadow-sm`}
                         >
+                          <div
+                            className={`w-2 h-2 rounded-full mr-2 ${
+                              student.status === "Attentive" ? "bg-green-200" : "bg-red-200"
+                            }`}
+                          ></div>
                           {student.status}
                         </Badge>
                       </TableCell>
-                      <TableCell className="font-medium">{student.solutions}</TableCell>
-                      <TableCell className="font-medium">{student.notes}</TableCell>
+                      <TableCell className="py-4 px-6">
+                        <div className="flex items-center gap-2">
+                          <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                            <FileText className="w-4 h-4 text-blue-600" />
+                          </div>
+                          <span className="font-semibold text-gray-800">{student.solutions}</span>
+                        </div>
+                      </TableCell>
+                      <TableCell className="py-4 px-6">
+                        <div className="flex items-center gap-2">
+                          <div className="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
+                            <BookOpen className="w-4 h-4 text-orange-600" />
+                          </div>
+                          <span className="font-semibold text-gray-800">{student.notes}</span>
+                        </div>
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
               </Table>
-            </CardContent>
-          </Card>
+            </div>
+          </CardContent>
+        </Card>
         </div>
       </div>
     </div>
