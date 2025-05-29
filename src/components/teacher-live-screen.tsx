@@ -79,6 +79,10 @@ const ClassroomDashboard: React.FC = () => {
     return () => clearInterval(timer); // cleanup on unmount
   }, []);
 
+  useEffect(() => {
+    
+  }, []);
+
    const formatTime = (secs:any) => {
     const mins = Math.floor(secs / 60)
       .toString()
@@ -104,15 +108,15 @@ const ClassroomDashboard: React.FC = () => {
         
         {/* Live Classroom */}
         <div className="bg-white rounded-lg p-6 shadow-sm py-10 flex flex-col">
-          <h2 className="text-3xl font-bold mb-10">Live Classroom</h2>
+          {/* <h2 className="text-3xl font-bold mb-10">Live Classroom</h2> */}
           <div className="w-full h-5"></div>
            <div
         style={{
           left: 0,
           width: '100%',
-          height: 0,
+          height: '100%',
           position: 'relative',
-          paddingBottom: '46.25%',
+          // paddingBottom: '46.25%',
         }}
       
       >
