@@ -122,7 +122,7 @@ export default function StudentDashboardSummary() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 px-4">
       <div className="w-full mx-auto space-y-6">
         {/* Header */}
         <div className="bg-white w-full flex items-center gap-4 mb-8 py-4 px-10">
@@ -135,29 +135,108 @@ export default function StudentDashboardSummary() {
         <h1 className="text-3xl font-bold text-gray-900 mb-8 px-10">Student Dashboard</h1>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8 px-10">
-          {['orange', 'purple', 'green', 'red'].map((color, i) => (
-            <Card key={i} className={`bg-${color}-50 border-${color}-100 relative overflow-hidden`}>
-              <CardContent className="p-6 relative z-10">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8 px-10">
+          {/* Total Students Card */}
+          <Card className="bg-orange-50 border-orange-100 relative overflow-hidden">
+            <CardContent className="p-6 relative z-10">
+              <div className="flex items-center justify-between">
                 <div>
                   <p className="text-lg font-bold text-gray-600 mb-1">Total Students</p>
-                  <p className={`text-4xl font-bold text-${color}-500 mb-2`}>24</p>
+                  <p className="text-4xl font-bold text-orange-500 mb-2">24</p>
                   <p className="text-sm text-gray-600">Active in class</p>
-                  <p className={`text-2xl font-bold text-${color}-400`}>18</p>
+                  <p className="text-2xl font-bold text-orange-400">18</p>
                 </div>
-              </CardContent>
-              <div className="absolute bottom-0 right-0 w-40 h-40 z-0 pointer-events-none">
-                <Image
-                  src={`/images/${["cartoon", "leaderboard", "target", "warning"][i]}.svg`}
-                  alt="Icon"
-                  width={160}
-                  height={160}
-                  className="object-contain"
-                  priority
-                />
+                
               </div>
-            </Card>
-          ))}
+            </CardContent>
+            <div className="absolute bottom-0 right-0 w-40 h-40 z-0 pointer-events-none">
+    <Image
+      src="/images/cartoon.svg"
+      alt="Leaderboard Icon"
+      width={160}
+      height={160}
+      className="object-contain"
+      priority
+    />
+  </div>
+          </Card>
+
+          {/* Average Score Card */}
+          <Card className="bg-purple-50 border-purple-100 relative overflow-hidden">
+  <CardContent className="p-6 relative z-10">
+    <div className="flex items-start justify-between">
+      <div>
+        <p className="text-lg font-bold  text-gray-600 mb-1">Average Attentiveness</p>
+        <p className="text-4xl font-bold text-purple-500 mb-2">78%</p>
+        <p className="text-sm text-gray-600">Class Attentiveness</p>
+        <p className="text-2xl font-bold text-purple-400">63%</p>
+      </div>
+    </div>
+  </CardContent>
+
+  {/* Fixed to bottom right */}
+  <div className="absolute bottom-0 right-0 w-40 h-40 z-0 pointer-events-none translate-y-8">
+    <Image
+      src="/images/leaderboard.svg"
+      alt="Leaderboard Icon"
+      width={160}
+      height={160}
+      className="object-contain"
+      priority
+    />
+  </div>
+</Card>
+
+
+          {/* High Performers Card */}
+          <Card className="bg-green-50 border-green-100 relative overflow-hidden">
+            <CardContent className="p-6 relative z-10">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-lg font-bold text-gray-600 mb-1">High Performers</p>
+                  <p className="text-4xl font-bold text-green-500 mb-2">24</p>
+                  <p className="text-sm text-gray-600">Active in class</p>
+                  <p className="text-2xl font-bold text-green-400">18</p>
+                </div>
+                
+              </div>
+            </CardContent>
+            <div className="absolute bottom-0 right-0 w-40 h-40 z-0 pointer-events-none translate-y-6">
+    <Image
+      src="/images/target.svg"
+      alt="Leaderboard Icon"
+      width={160}
+      height={160}
+      className="object-contain"
+      priority
+    />
+  </div>
+          </Card>
+
+          {/* Needs Attention Card */}
+          <Card className="bg-red-50 border-red-100 relative overflow-hidden">
+            <CardContent className="p-6 relative z-10">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-lg font-bold text-gray-600 mb-1">Need Attention</p>
+                  <p className="text-4xl font-bold text-red-500 mb-2">3</p>
+                  <p className="text-sm text-gray-600">Active in class</p>
+                  <p className="text-2xl font-bold text-red-400">18</p>
+                </div>
+                
+              </div>
+            </CardContent>
+            <div className="absolute bottom-0 right-0 w-40 h-40 z-0 pointer-events-none">
+    <Image
+      src="/images/warning.svg"
+      alt="Leaderboard Icon"
+      width={160}
+      height={160}
+      className="object-contain"
+      priority
+    />
+  </div>
+          </Card>
         </div>
 
         {/* Middle Section */}
