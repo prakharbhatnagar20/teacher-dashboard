@@ -62,10 +62,10 @@ const studentData = [
 
 export default function StudentDashboardSummary() {
   const analyticsData = [
-    { label: "Attentive Students", percentage: 63, count: 8, color: "bg-green-500", textColor: "text-green-600", imageSrc: "/images/eye.svg" },
-    { label: "Non-Attentive Students", percentage: 38, count: 4, color: "bg-pink-500", textColor: "text-pink-600", imageSrc: "/images/notAttentive.svg" },
-    { label: "Camera Off Students", percentage: 22, count: 2, color: "bg-orange-500", textColor: "text-orange-600", imageSrc: "/images/videoOn.svg" },
-    { label: "Not in Frame", percentage: 14, count: 1, color: "bg-gray-600", textColor: "text-gray-600", imageSrc: "/images/notInframe.svg" },
+    { label: "Attentive Students", percentage: 63, count: 6, color: "bg-green-500", textColor: "text-green-600", imageSrc: "/images/eye.svg" },
+    { label: "Non-Attentive Students", percentage: 38, count: 1, color: "bg-pink-500", textColor: "text-pink-600", imageSrc: "/images/notAttentive.svg" },
+    { label: "Camera Off Students", percentage: 22, count: 1, color: "bg-orange-500", textColor: "text-orange-600", imageSrc: "/images/videoOn.svg" },
+    { label: "Not in Frame", percentage: 0, count: 0, color: "bg-gray-600", textColor: "text-gray-600", imageSrc: "/images/notInframe.svg" },
   ]
 
   const chartOptions: ChartOptions<'line'> = {
