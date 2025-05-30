@@ -89,46 +89,7 @@ const ClassroomDashboard: React.FC = () => {
     
   }, []);
 
-  useEffect(() => {
-  let intervalId;
 
-  const fetchMetrics = async () => {
-    try {
-      const response = await fetch("https://testsetup-er18.onrender.com/api/attendance"); // Replace with your actual API URL
-      const data = await response.json();
-
-      console.log("Fetched metrics:", data);
-
-      if (data && typeof data === "object") {
-        setMetrics({
-          attentiveCount: data.attentive || 0,
-          inattentiveCount: data.nonAttentive || 0,
-          cameraOffCount: data.camOff || 0,
-          notDetectedCount: data.notDetected || 0,
-        });
-
-        // setTotalStudents(data.totalStudents || 0);
-        setAverageAttentiveness(data.averageAttentiveness || 0);
-
-        setMetricsData(data);
-
-
-
-      }
-    } catch (error) {
-      console.error("Error fetching metrics:", error);
-    }
-  };
-
-  // Initial fetch
-  fetchMetrics();
-
-  // Poll every 10 seconds
-  intervalId = setInterval(fetchMetrics, 10000);
-
-  // Cleanup on component unmount
-  return () => clearInterval(intervalId);
-}, []);
 
    const formatTime = (secs:any) => {
     const mins = Math.floor(secs / 60)
@@ -140,7 +101,7 @@ const ClassroomDashboard: React.FC = () => {
 
   return (
     <div className="max-w-9xl mx-auto space-y-6 bg-gray-50 min-h-screen">
-      <div className="bg-white w-full flex items-center gap-4 mb-8 py-4 px-10">
+      <div className="bg-white w-full flex justify-between items-center gap-4 mb-8 py-4 px-10">
           <Button variant="ghost" size="sm" className="p-0">
           
 
@@ -148,6 +109,15 @@ const ClassroomDashboard: React.FC = () => {
            
             <span className="ml-1 text-lg">Live Tracking</span>
           </Button>
+          <div className=" flex justify-end items-end gap-2 px-2">
+          <Button className="bg-blue-500 text-white hover:bg-blue-600">
+            <span className="text-lg">Ask Notes</span>
+          </Button>
+           <Button className="bg-blue-500 text-white hover:bg-blue-600">
+            <span className="text-lg">Ask Question</span>
+          </Button>
+          </div>
+          
         </div>
 
 
@@ -169,7 +139,7 @@ const ClassroomDashboard: React.FC = () => {
       >
         <div className="w-full h-10"></div>
         <iframe
-          src="https://cdn.iframe.ly/api/iframe?url=https%3A%2F%2Fyoutu.be%2FDx5qFachd3A&key=925108d922be940af814f71907a7df4b"
+          src="https://www.youtube.com/embed/cNtDZzdFGfQ?rel=0"
           style={{
             top: -10,
             left: 0,
@@ -209,7 +179,7 @@ const ClassroomDashboard: React.FC = () => {
             <MetricCard title="Attentive Students" count={metrics.attentiveCount} imageSrc="/icons/image3.png" bgColor="bg-green-50" textColor="text-green-600" />
             <MetricCard title="Non-Attentive Students" count={metrics.inattentiveCount} imageSrc="/icons/image4.png" bgColor="bg-red-50" textColor="text-red-600" />
             <MetricCard title="Camera Off Students" count={metrics.cameraOffCount} imageSrc="/icons/image5.png" bgColor="bg-orange-50" textColor="text-orange-500" />
-            <MetricCard title="Not in Camera Students" count={metrics.notDetectedCount} imageSrc="/icons/image6.png" bgColor="bg-gray-50" textColor="text-gray-600" />
+            <MetricCard title="Not in Frame" count={metrics.notDetectedCount} imageSrc="/icons/image6.png" bgColor="bg-gray-50" textColor="text-gray-600" />
           </div>
         </div>
       </div>
